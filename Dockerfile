@@ -22,7 +22,7 @@ RUN apt-get update \
 ENV pip_packages "wheel cryptography ansible"
 
 # Install Ansible via pip.
-RUN pip install --upgrade pip \
+RUN pip install --upgrade pip setuptools<45 \
     && pip install $pip_packages
 
 COPY initctl_faker .
