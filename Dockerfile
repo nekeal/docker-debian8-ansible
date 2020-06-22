@@ -14,6 +14,7 @@ RUN apt-get update \
     /etc/systemd/system/*.wants/* \
     /lib/systemd/system/getty.target \
     /lib/systemd/system/local-fs.target.wants/* \
+    /lib/systemd/system/systemd*udev* \
     /lib/systemd/system/sockets.target.wants/*udev* \
     /lib/systemd/system/sockets.target.wants/*initctl* \
     /lib/systemd/system/sysinit.target.wants/systemd-tmpfiles-setup* \
