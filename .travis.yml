@@ -17,6 +17,6 @@ script:
   - docker exec --tty test-container env TERM=xterm ansible --version
 
 after_success:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_LOGIN" --password-stdin
   - docker tag docker-ansible:latest nekeal/debian8-ansible-systemd:latest
   - docker push nekeal/debian8-ansible-systemd
