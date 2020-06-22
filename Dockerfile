@@ -13,6 +13,7 @@ RUN apt-get update \
     && rm -f /lib/systemd/system/multi-user.target.wants/* \
     /etc/systemd/system/*.wants/* \
     /lib/systemd/system/getty.target \
+    /lib/systemd/system/multi-user.target.wants/getty.target
     /lib/systemd/system/local-fs.target.wants/* \
     /lib/systemd/system/systemd*udev* \
     /lib/systemd/system/sockets.target.wants/*udev* \
