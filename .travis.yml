@@ -3,10 +3,10 @@ dist: bionic
 language: python
 services: docker
 
-env:
-  global:
-  - DOCKER_IMAGE: debian8-ansible-systemd
-  - DOCKER_USER: nekeal
+# env:
+#   global:
+#   - DOCKER_IMAGE: debian8-ansible-systemd
+#   - DOCKER_USER: nekeal
 
 before_install:
   # Upgrade Docker.
