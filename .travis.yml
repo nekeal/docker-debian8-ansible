@@ -1,17 +1,38 @@
 ---
+dist: bionic
+language: python
 services: docker
+
+env:
+  global:
+    - DOCKER_IMAGE: debian8-ansible-systemd
+    - DOCKER_USER: nekeal
 
 before_install:
   # Upgrade Docker.
   - sudo apt-get update
-  - sudo apt-get -y -o Dpkg::Options::="--force-confnew" install docker-ce
+  - sudo apt-get -y install --upgrade docker-ce
 
 script:
   # Test building Dockerfile.
-  - docker build -t docker-ansible .
+  - docker build -t $DOCKER_IMAGE .
 
   # Test running the container.
-  - docker run --name test-container -d --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro docker-ansible
+  - docker run --name test-container -d --privileged -v /sys/fs/cgroup:/sys/fs/cgroup:ro $DOCKER_IMAGE
+
+  # Verify 'ansible' user exists and is a sudoer
+  - docker exec --tty test-container env TERM=xterm sudo -u ansible sudo -v
 
   # Verify Ansible is available in the container.
   - docker exec --tty test-container env TERM=xterm ansible --version
+
+after_success:
+  - |
+    if [[ $TRAVIS_BRANCH == 'master' ]]; then
+      TAG='latest'
+    else
+      TAG=$TRAVIS_BRANCH
+    fi
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_LOGIN" --password-stdin
+  - docker tag $DOCKER_IMAGE $DOCKER_USER/$DOCKER_IMAGE:$TAG
+  - docker push $DOCKER_USER/$DOCKER_IMAGE
