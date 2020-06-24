@@ -19,7 +19,7 @@ RUN rm -f /lib/systemd/system/systemd*udev* \
 ENV pip_packages "wheel cryptography ansible"
 
 # Install Ansible via pip.
-RUN pip install --upgrade pip setuptools \
+RUN pip install --upgrade pip "setuptools<45" \
     && pip install $pip_packages
 
 COPY initctl_faker .
@@ -39,6 +39,3 @@ RUN set -xe \
 
 VOLUME ["/sys/fs/cgroup"]
 CMD ["/lib/systemd/systemd"]
-
-
-
