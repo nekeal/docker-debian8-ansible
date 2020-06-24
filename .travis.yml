@@ -24,12 +24,12 @@ script:
   - docker exec --tty test-container env TERM=xterm ansible --version
 
 after_success:
-  - if [[ $TRAVIS_BRANCH == 'master' ]]; then
-    TAG='latest'
-  else
-    TAG=$TRAVIS_BRANCH
-  fi
-  echo $TAG
+  # - if [[ $TRAVIS_BRANCH == 'master' ]]; then
+  #   TAG='latest'
+  # else
+  #   TAG=$TRAVIS_BRANCH
+  # fi
+  # echo $TAG
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_LOGIN" --password-stdin
   - docker tag $DOCKER_IMAGE $DOCKER_USER/$DOCKER_IMAGE:$TAG
   - docker push $DOCKER_USER/$DOCKER_IMAGE
